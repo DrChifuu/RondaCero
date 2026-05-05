@@ -93,9 +93,7 @@ const drinkPartyPath = path.join(__dirname, 'minijuegos', 'DrinkParty', 'server.
 if (isVercel) {
   // Vercel (serverless): sin child process ni WebSocket.
   // Servimos UI estática del minijuego (Socket.IO no conecta, pero la interfaz carga).
-  app.get('/drinkparty', (_req: Request, res: Response) => {
-    res.redirect('/drinkparty/');
-  });
+  // express.static maneja automáticamente el redirect /drinkparty → /drinkparty/ (301).
   app.use('/drinkparty', express.static(
     path.join(__dirname, 'minijuegos', 'DrinkParty', 'public')
   ));
