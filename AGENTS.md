@@ -1,55 +1,65 @@
-# Ronda Cero - TypeScript
+# Ronda Cero - Desarrollo
 
 Plataforma de minijuegos sociales multijugador. Servidor principal Express + EJS que orquesta minijuegos independientes.
+
+## Hosting recomendado: Render
+
+Render soporta WebSocket y `child_process.fork()` de forma nativa, lo que permite ejecutar todos los minijuegos sin restricciones. **Vercel no es recomendado** para este proyecto porque:
+
+- No soporta WebSocket (Socket.IO) en plan Hobby
+- No soporta `child_process.fork()` para levantar minijuegos como subprocesos
+- Las sesiones en memoria se pierden entre deploys
+
+### Render: lo que funciona
+
+- Login / invitado con sesiones
+- Vistas EJS (index, login, dashboard)
+- Archivos estáticos
+- Minijuegos con tiempo real (Socket.IO) — **completo**
+- Proxy a procesos hijo (fork)
 
 ## Stack
 
 | Capa | Tecnología |
 |------|-----------|
-| Lenguaje | TypeScript 5.x (strict) |
+| Lenguaje | JavaScript (Node.js) |
 | Backend principal | Express 4 + EJS + express-session |
 | Tiempo real | Socket.IO 4 (minijuegos) |
 | Proxy | http-proxy-middleware |
-| Hosting | Vercel (serverless) para static/auth, externo para minijuegos real-time |
-| Build | `tsc` → `dist/` |
+| Hosting | Render (Web Service) |
 
 ## Comandos
 
 ```bash
-npm run build      # tsc + copia assets (public/, views/, DrinkParty/public/) a dist/
-npm start          # node dist/server.js (producción / Vercel)
-npm run dev        # build + start (desarrollo local)
-npx tsc --noEmit   # typecheck sin compilar
+npm install      # Instalar dependencias raíz + minijuegos (postinstall)
+npm start        # node server.js
 ```
 
 ## Estructura
 
 ```
-src/
-├── server.ts                    # Express principal (auth, rutas, proxy)
-└── minijuegos/                  # Cada minijuego es un módulo independiente
-    └── DrinkParty/
-        ├── server.ts            # Lógica del minijuego (Express + Socket.IO)
-        ├── package.json         # Dependencias propias (devDependencies)
-        ├── tsconfig.json        # Opcional, el root ya compila todo src/
-        └── public/              # Static files del minijuego (app.js, index.html, style.css)
-views/                           # EJS templates (index, login, dashboard)
-public/                          # Static global (style.css)
-dist/                            # Output compilado + assets copiados (no commitear)
+server.js                    # Express principal (auth, rutas, proxy)
+package.json                 # Dependencias raíz
+views/                       # EJS templates (index, login, dashboard)
+public/                      # Static global (style.css)
+minijuegos/                  # Cada minijuego es un módulo independiente
+  DrinkParty/
+    server.js                # Lógica del minijuego (Express + Socket.IO)
+    package.json             # Dependencias propias
+    public/                  # Static files del minijuego (app.js, index.html, style.css)
 ```
 
 ## Arquitectura
 
-### Servidor principal (`src/server.ts`)
+### Servidor principal (`server.js`)
 
 - Autenticación: login con credenciales hardcodeadas, acceso invitado
 - Sesiones en memoria con `express-session`
 - Sirve vistas EJS desde `views/` y archivos estáticos desde `public/`
 - Proxy inverso: redirige `/{minijuego}/*` y `/socket.io/*` al proceso hijo correspondiente
-- **Exporta `app` como default** para compatibilidad con `@vercel/node`
-- **Solo en local** (`process.env.VERCEL !== '1'`): hace `fork()` del minijuego y `app.listen()`
+- Hace `fork()` del minijuego y espera mensaje `ready` antes de `app.listen()`
 
-### Minijuegos (`src/minijuegos/{Nombre}/`)
+### Minijuegos (`minijuegos/{Nombre}/`)
 
 Cada minijuego es una app Express independiente con su propio Socket.IO server. El servidor principal lo levanta como child process y le pasa el tráfico vía http-proxy-middleware.
 
@@ -57,63 +67,32 @@ Cada minijuego es una app Express independiente con su propio Socket.IO server. 
 1. El child process debe enviar `process.send('ready')` cuando esté listo para recibir tráfico
 2. El padre espera el mensaje `ready` antes de empezar a escuchar en su puerto
 3. El padre proxy el tráfico HTTP normal y el upgrade WebSocket al hijo
-4. El minijuego usa un namespace de URL (ej: `/drinkparty/`) y un path de Socket.IO específico (ej: `/drinkparty/socket.io`)
+4. El minijuego usa un namespace de URL (ej: `/drinkparty/`) y un path de Socket.IO específico
 
 ### Cómo agregar un minijuego nuevo
 
-1. Crear `src/minijuegos/NuevoJuego/server.ts` que:
+1. Crear `minijuegos/NuevoJuego/server.js` que:
    - Cree una app Express y un servidor http
    - Escuche en un puerto interno (ej: `process.env.PORT || 3001`)
    - Monte su Socket.IO con un path único (ej: `/nuevojuego/socket.io`)
    - Envíe `process.send('ready')` cuando esté listo
-2. Agregar el proxy en `src/server.ts`:
+2. Agregar el proxy en `server.js`:
    - Crear un `createProxyMiddleware` con `target: 'http://localhost:{puerto}'`
    - Configurar `pathFilter` para `/nuevojuego/` y su socket.io path
-   - Agregar el fork del child process en el bloque local-only
+   - Agregar el fork del child process
 3. Agregar botón/enlace en `views/dashboard.ejs`
-4. Copiar los static files del minijuego en el build script si es necesario
 
-## Vercel
+### Despliegue en Render
 
-### Limitaciones de Vercel serverless
-
-- **No soporta WebSockets** en plan Hobby. Los minijuegos que usan Socket.IO **no funcionan en Vercel**.
-- **No soporta `child_process.fork()`**. No se pueden levantar procesos hijo.
-- **Cold starts**: la primera request es lenta, sesiones en memoria se pierden entre deployments.
-- Las sesiones de `express-session` son efímeras (en memoria, no persistentes).
-
-### Qué funciona en Vercel
-
-- Login / invitado
-- Vistas EJS (index, login, dashboard)
-- Archivos estáticos
-- Endpoints HTTP sin estado
-
-### Qué NO funciona en Vercel
-
-- Cualquier minijuego con tiempo real (Socket.IO)
-- El proxy a procesos hijo (fork)
-- Sesiones persistentes entre deploys
-
-### Estrategia para minijuegos real-time
-
-Para que los minijuegos funcionen en producción se necesita un backend separado con soporte WebSocket. Opciones:
-
-| Opción | Descripción |
-|--------|------------|
-| **Railway / Fly.io / Render** | Hosting que ejecuta `node dist/minijuegos/DrinkParty/server.js` con WebSocket nativo |
-| **VPS propio** | Una VM con Node.js ejecutando los minijuegos |
-| **Socket.IO + Vercel Serverless Functions** | No viable sin WebSocket |
-
-El frontend de cada minijuego (`public/app.js`) debe conectarse al backend de tiempo real vía URL configurable por variable de entorno (ej: `VITE_WS_URL`).
+1. Crear **Web Service** en Render, conectar repo de GitHub
+2. **Build Command**: `npm install && cd minijuegos/DrinkParty && npm install`
+3. **Start Command**: `node server.js`
+4. **Plan**: Starter o superior (necesario para WebSocket)
+5. El servidor usa `process.env.PORT` que Render asigna automáticamente
 
 ## Convenciones de código
 
-- **TypeScript estricto** (`strict: true` en tsconfig)
-- **Interfaces sobre types** para definiciones de objetos
-- **Nombres en camelCase** para variables y funciones, **PascalCase** para interfaces
-- **Export default** la app Express principal para Vercel
-- **No usar `any`** sin justificación; preferir `unknown` con type narrowing
-- **Imports**: usar `import` de ES modules con `esModuleInterop: true`
-- **Paths relativos** en imports, no path aliases
-- Mantener `node_modules` solo en raíz; las dependencias de minijuegos van en el `package.json` raíz como `dependencies`
+- **JavaScript plano** (sin TypeScript — se priorizó simplicidad y compatibilidad con Render)
+- **Nombres en camelCase** para variables y funciones
+- **No usar `var`** — preferir `const` y `let`
+- **Mantener `node_modules` solo en raíz**; `postinstall` instala dependencias de minijuegos automáticamente
