@@ -24,7 +24,6 @@ declare module 'express-session' {
 
 const app: Express = express();
 const PORT: number = parseInt(process.env.PORT || '4000', 10);
-const isVercel = process.env.VERCEL === '1';
 
 app.use(session({
   secret: 'clave-secreta-temporal',
@@ -90,58 +89,46 @@ app.get('/logout', (req: Request, res: Response) => {
 
 const drinkPartyPath = path.join(__dirname, 'minijuegos', 'DrinkParty', 'server.js');
 
-if (isVercel) {
-  // Vercel (serverless): sin child process ni WebSocket.
-  // Servimos UI estática del minijuego (Socket.IO no conecta, pero la interfaz carga).
-  // express.static maneja automáticamente el redirect /drinkparty → /drinkparty/ (301).
-  app.use('/drinkparty', express.static(
-    path.join(__dirname, 'minijuegos', 'DrinkParty', 'public')
-  ));
-} else {
-  // Desarrollo local: fork del minijuego + proxy HTTP/WebSocket
-  app.use((req: Request, _res: Response, next: NextFunction) => {
-    if (req.url === '/drinkparty') return _res.redirect('/drinkparty/');
-    next();
-  });
+app.use((req: Request, _res: Response, next: NextFunction) => {
+  if (req.url === '/drinkparty') return _res.redirect('/drinkparty/');
+  next();
+});
 
-  const drinkPartyProxy = createProxyMiddleware({
-    target: 'http://localhost:3000',
-    changeOrigin: true,
-    ws: true,
-    pathFilter: (pathname: string) =>
-      pathname.startsWith('/drinkparty/') ||
-      pathname.startsWith('/socket.io/'),
-    logger: console,
-  });
+const drinkPartyProxy = createProxyMiddleware({
+  target: 'http://localhost:3000',
+  changeOrigin: true,
+  ws: true,
+  pathFilter: (pathname: string) =>
+    pathname.startsWith('/drinkparty/') ||
+    pathname.startsWith('/socket.io/'),
+  logger: console,
+});
 
-  app.use(drinkPartyProxy);
+app.use(drinkPartyProxy);
 
-  const drinkPartyChild: ChildProcess = fork(drinkPartyPath, [], {
-    env: { ...process.env, PORT: '3000' },
-  });
+const drinkPartyChild: ChildProcess = fork(drinkPartyPath, [], {
+  env: { ...process.env, PORT: '3000' },
+});
 
-  drinkPartyChild.on('message', (msg: unknown) => {
-    if (msg === 'ready') {
-      const server = app.listen(PORT, () => {
-        console.log(`🎲 Ronda Cero → http://localhost:${PORT}`);
-      });
+drinkPartyChild.on('message', (msg: unknown) => {
+  if (msg === 'ready') {
+    const server = app.listen(PORT, () => {
+      console.log(`🎲 Ronda Cero → http://localhost:${PORT}`);
+    });
 
-      server.on('upgrade', (req: any, socket: any, head: any) => {
-        if (
-          req.url.startsWith('/drinkparty/') ||
-          req.url.startsWith('/socket.io/')
-        ) {
-          if (drinkPartyProxy.upgrade) {
-            drinkPartyProxy.upgrade(req, socket, head);
-          } else {
-            socket.destroy();
-          }
+    server.on('upgrade', (req: any, socket: any, head: any) => {
+      if (
+        req.url.startsWith('/drinkparty/') ||
+        req.url.startsWith('/socket.io/')
+      ) {
+        if (drinkPartyProxy.upgrade) {
+          drinkPartyProxy.upgrade(req, socket, head);
+        } else {
+          socket.destroy();
         }
-      });
-    }
-  });
+      }
+    });
+  }
+});
 
-  process.on('exit', () => drinkPartyChild.kill());
-}
-
-export default app;
+process.on('exit', () => drinkPartyChild.kill());
