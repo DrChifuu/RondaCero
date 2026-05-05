@@ -4,7 +4,7 @@
   "description": "Plataforma de minijuegos sociales - TypeScript version",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc && cp -r public dist/ && cp -r views dist/ && cp -r src/minijuegos/DrinkParty/public dist/minijuegos/DrinkParty/",
+    "build": "tsc && tsc -p src/minijuegos/DrinkParty/client/tsconfig.json && cp -r public dist/ && cp -r views dist/ && cp -r src/minijuegos/DrinkParty/public dist/minijuegos/DrinkParty/",
     "start": "npm run build && node dist/server.js",
     "dev": "npm run build && node dist/server.js",
     "postinstall": "cd src/minijuegos/DrinkParty && npm install"

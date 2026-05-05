@@ -132,3 +132,5 @@ drinkPartyChild.on('message', (msg: unknown) => {
 });
 
 process.on('exit', () => drinkPartyChild.kill());
+
+export default app;
