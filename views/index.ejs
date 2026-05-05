@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RondaCero - Welcome</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;1,400;1,500&family=Lexend:wght@600&family=Spline+Sans:wght@700;800&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#303b41",
+            "surface-dim": "#0a151a",
+            "secondary-fixed-dim": "#5bd5fc",
+            "background": "#0a151a",
+            "inverse-surface": "#d8e4ec",
+            "on-surface": "#d8e4ec",
+            "inverse-primary": "#745c00",
+            "surface": "#0a151a",
+            "surface-container-low": "#121d23",
+            "on-primary-container": "#725a00",
+            "on-tertiary-container": "#b8005e",
+            "secondary-container": "#00a3c8",
+            "primary-container": "#ffd23f",
+            "on-error": "#690005",
+            "surface-container-highest": "#2b363d",
+            "primary-fixed": "#ffe089",
+            "surface-variant": "#2b363d",
+            "on-secondary-container": "#003341",
+            "tertiary-fixed-dim": "#ffb1c6",
+            "on-error-container": "#ffdad6",
+            "on-surface-variant": "#d1c5ad",
+            "error-container": "#93000a",
+            "secondary-fixed": "#b7eaff",
+            "outline-variant": "#4d4634",
+            "error": "#ffb4ab",
+            "surface-container-lowest": "#051015",
+            "inverse-on-surface": "#273238",
+            "on-tertiary-fixed": "#3f001c",
+            "tertiary-container": "#ffc9d6",
+            "on-secondary-fixed": "#001f28",
+            "on-tertiary": "#650031",
+            "on-primary-fixed": "#241a00",
+            "primary-fixed-dim": "#edc22e",
+            "tertiary": "#fff0f2",
+            "surface-tint": "#edc22e",
+            "surface-container-high": "#202b32",
+            "on-secondary-fixed-variant": "#004e61",
+            "secondary": "#5bd5fc",
+            "on-primary-fixed-variant": "#574500",
+            "on-secondary": "#003543",
+            "on-primary": "#3d2f00",
+            "primary": "#fff2d7",
+            "outline": "#9a907a",
+            "on-background": "#d8e4ec",
+            "surface-container": "#162127",
+            "tertiary-fixed": "#ffd9e1",
+            "on-tertiary-fixed-variant": "#8e0048"
+          },
+          fontFamily: {
+            "body-sm": ["Be Vietnam Pro"],
+            "body-lg": ["Be Vietnam Pro"],
+            "headline-xl": ["Spline Sans"],
+            "label-bold": ["Lexend"],
+            "bilingual-sub": ["Be Vietnam Pro"],
+            "headline-md": ["Spline Sans"]
+          },
+          fontSize: {
+            "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+            "headline-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "label-bold": ["14px", { "lineHeight": "1.0", "fontWeight": "600" }],
+            "bilingual-sub": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+            "headline-md": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "margin": "24px",
+            "chunky-gap": "12px",
+            "gutter": "16px",
+            "container-max": "1200px",
+            "unit": "8px"
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    .rough-border {
+      border: 4px solid #000;
+      border-radius: 4px 8px 3px 6px;
+    }
+    .rough-shadow {
+      box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+    }
+    .rough-shadow-lg {
+      box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+    }
+    .rough-button:active {
+      box-shadow: none;
+      transform: translate(4px, 4px);
+    }
+    .paper-stack {
+      position: relative;
+    }
+    .paper-stack::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: -4px;
+      right: 4px;
+      bottom: -4px;
+      border: 4px solid #000;
+      background: #2b363d;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .error-msg {
+      background: var(--color-error-container, #93000a);
+      color: var(--color-on-error-container, #ffdad6);
+      border: 2px solid black;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-lg selection:bg-primary-container selection:text-black">
+  <main class="flex-grow flex flex-col items-center justify-center p-gutter relative overflow-hidden">
+    <!-- Doodles decorativos -->
+    <div class="absolute top-10 left-10 text-primary opacity-50 transform -rotate-12 pointer-events-none">
+      <span class="material-symbols-outlined text-6xl">stadia_controller</span>
+    </div>
+    <div class="absolute bottom-20 right-10 text-secondary opacity-50 transform rotate-12 pointer-events-none">
+      <span class="material-symbols-outlined text-6xl">star</span>
+    </div>
+    <div class="absolute top-1/4 right-1/4 text-on-surface-variant opacity-30 transform rotate-45 pointer-events-none">
+      <span class="material-symbols-outlined text-4xl">edit</span>
+    </div>
+    <div class="absolute bottom-1/4 left-1/4 text-tertiary-fixed-dim opacity-30 transform -rotate-45 pointer-events-none">
+      <span class="material-symbols-outlined text-5xl">sports_esports</span>
+    </div>
+
+    <!-- Language Switcher (decorativo) -->
+    <div class="absolute top-6 right-6 flex items-center gap-2 rough-border rough-shadow bg-surface-container-high px-3 py-1 transform rotate-1 z-10">
+      <span class="material-symbols-outlined text-primary">language</span>
+      <span class="font-label-bold text-label-bold text-on-surface">ES / EN</span>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="w-full max-w-md relative z-10">
+      <div class="text-center mb-margin transform -rotate-2">
+        <h1 class="font-headline-xl text-headline-xl text-primary-fixed italic uppercase drop-shadow-[4px_4px_0_rgba(0,0,0,1)] text-[64px] mb-2 tracking-tighter">
+          RondaCero
+        </h1>
+        <p class="font-headline-md text-headline-md text-on-surface bg-surface-container-highest inline-block px-4 py-2 rough-border rough-shadow transform rotate-1">
+          Ready to Play?
+        </p>
+      </div>
+
+      <!-- Tarjeta de login -->
+      <div class="paper-stack bg-surface-bright rough-border rough-shadow-lg p-margin flex flex-col gap-margin transform rotate-1">
+        <% if (error) { %>
+        <div class="error-msg px-4 py-2 rounded text-sm font-bold text-center">
+          <%= error %>
+        </div>
+        <% } %>
+        <form action="/login" method="POST" class="flex flex-col gap-chunky-gap">
+          <div class="flex flex-col gap-1">
+            <label class="font-label-bold text-label-bold text-on-surface ml-1" for="username">Username</label>
+            <span class="font-bilingual-sub text-bilingual-sub text-on-surface-variant italic ml-1 -mt-1">Nombre de usuario</span>
+            <input class="bg-surface-dim rough-border text-on-surface px-4 py-3 font-body-lg text-body-lg focus:outline-none focus:border-primary-container focus:ring-0 transition-colors w-full" id="username" name="username" placeholder="Enter your doodle name" type="text" required/>
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="font-label-bold text-label-bold text-on-surface ml-1" for="password">Password</label>
+            <span class="font-bilingual-sub text-bilingual-sub text-on-surface-variant italic ml-1 -mt-1">Contraseña</span>
+            <input class="bg-surface-dim rough-border text-on-surface px-4 py-3 font-body-lg text-body-lg focus:outline-none focus:border-primary-container focus:ring-0 transition-colors w-full" id="password" name="password" placeholder="••••••••" type="password" required/>
+          </div>
+          <div class="flex flex-col gap-chunky-gap mt-unit">
+            <button type="submit" class="rough-button w-full bg-primary-container text-black font-headline-md text-headline-md rough-border rough-shadow py-3 uppercase tracking-wider transform -rotate-1 transition-transform">
+              Login
+            </button>
+          </div>
+        </form>
+        <div class="flex items-center justify-center gap-2 text-on-surface-variant my-2">
+          <div class="h-1 w-12 bg-black"></div>
+          <span class="font-label-bold text-label-bold">OR</span>
+          <div class="h-1 w-12 bg-black"></div>
+        </div>
+        <form action="/guest" method="POST">
+          <button type="submit" class="rough-button w-full bg-secondary text-black font-label-bold text-label-bold rough-border rough-shadow py-3 uppercase tracking-wider flex items-center justify-center gap-2 transform rotate-1 transition-transform">
+            <span class="material-symbols-outlined">person_add</span>
+            Join as Guest
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

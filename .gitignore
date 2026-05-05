@@ -1,0 +1,16 @@
+# Editor
+.vscode/
+.idea/
+
+# Dependencias
+node_modules/
+
+# Compilados
+dist/
+
+# Variables de entorno
+.env
+.env.local
+
+# Vercel
+.vercel

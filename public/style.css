@@ -1,0 +1,73 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+  min-height: 100vh;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.logo {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  background: linear-gradient(135deg, #ff6b35, #ffd166);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.user-area span { margin-right: 10px; }
+.btn, .btn-small, a.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: .3s;
+}
+.btn-small { padding: 5px 12px; font-size: 0.85rem; }
+.guest-btn { background: linear-gradient(135deg, #06d6a0, #05c090); color: #fff; }
+.login-btn { background: linear-gradient(135deg, #4361ee, #3a0ca3); color: #fff; }
+.auth-box { max-width: 360px; margin: 60px auto; padding: 30px; text-align: center; border-radius: 20px; }
+.glass {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+}
+.auth-box h2 { margin-bottom: 20px; }
+.auth-box input {
+  width: 100%; padding: 12px; margin: 8px 0;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px; color: #fff;
+}
+.divider { margin: 15px 0; color: rgba(255,255,255,0.4); }
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.game-card {
+  display: block;
+  padding: 24px 16px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: #fff;
+  text-align: center;
+  transition: transform .2s, box-shadow .2s;
+}
+.game-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+.game-card.disabled { opacity: 0.4; pointer-events: none; }
+.game-icon { font-size: 3rem; margin-bottom: 8px; }
+.game-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 4px; }
+.game-desc { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+.error-msg { background: #ef476f; padding: 10px; border-radius: 8px; margin-bottom: 15px; }

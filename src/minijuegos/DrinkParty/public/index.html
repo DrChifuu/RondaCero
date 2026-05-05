@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>🍻 DrinkParty</title>
+  <link rel="stylesheet" href="/drinkparty/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- HOME -->
+  <div id="screen-home" class="screen active">
+    <div class="home-container">
+      <div class="logo-section">
+        <div class="logo-icon">🍻</div>
+        <h1 class="logo-title">DrinkParty</h1>
+        <p class="logo-subtitle">¡El juego definitivo para beber con amigos!</p>
+      </div>
+      <div class="home-form glass-card">
+        <div class="input-group">
+          <label>Tu nombre</label>
+          <input type="text" id="playerName" placeholder="¿Cómo te llaman?" maxlength="15" autocomplete="off">
+        </div>
+        <div class="input-group">
+		<label>Avatar</label>
+			<div class="avatar-picker" id="avatarPicker">
+			  <!-- Caras -->
+			  <span class="avatar-option selected" data-avatar="😎">😎</span>
+			  <span class="avatar-option" data-avatar="🤪">🤪</span>
+			  <span class="avatar-option" data-avatar="😈">😈</span>
+			  <span class="avatar-option" data-avatar="🥳">🥳</span>
+			  <span class="avatar-option" data-avatar="🤠">🤠</span>
+			  <span class="avatar-option" data-avatar="🥶">🥶</span>
+			  <span class="avatar-option" data-avatar="🤑">🤑</span>
+			  <span class="avatar-option" data-avatar="😏">😏</span>
+			  <span class="avatar-option" data-avatar="🧐">🧐</span>
+			  <span class="avatar-option" data-avatar="🤓">🤓</span>
+			  <span class="avatar-option" data-avatar="😵‍💫">😵‍💫</span>
+			  <span class="avatar-option" data-avatar="🥴">🥴</span>
+			  <!-- Fantasía / personajes -->
+			  <span class="avatar-option" data-avatar="👻">👻</span>
+			  <span class="avatar-option" data-avatar="💀">💀</span>
+			  <span class="avatar-option" data-avatar="👽">👽</span>
+			  <span class="avatar-option" data-avatar="🤖">🤖</span>
+			  <span class="avatar-option" data-avatar="👹">👹</span>
+			  <span class="avatar-option" data-avatar="🎃">🎃</span>
+			  <span class="avatar-option" data-avatar="🧛">🧛</span>
+			  <span class="avatar-option" data-avatar="🧙">🧙</span>
+			  <span class="avatar-option" data-avatar="🧜‍♀️">🧜‍♀️</span>
+			  <span class="avatar-option" data-avatar="🦸">🦸</span>
+			  <span class="avatar-option" data-avatar="🥷">🥷</span>
+			  <span class="avatar-option" data-avatar="🧑‍🚀">🧑‍🚀</span>
+			  <!-- Animales -->
+			  <span class="avatar-option" data-avatar="🦊">🦊</span>
+			  <span class="avatar-option" data-avatar="🐸">🐸</span>
+			  <span class="avatar-option" data-avatar="🐺">🐺</span>
+			  <span class="avatar-option" data-avatar="🦁">🦁</span>
+			  <span class="avatar-option" data-avatar="🐯">🐯</span>
+			  <span class="avatar-option" data-avatar="🐻">🐻</span>
+			  <span class="avatar-option" data-avatar="🐼">🐼</span>
+			  <span class="avatar-option" data-avatar="🐨">🐨</span>
+			  <span class="avatar-option" data-avatar="🦄">🦄</span>
+			  <span class="avatar-option" data-avatar="🐉">🐉</span>
+			  <span class="avatar-option" data-avatar="🦈">🦈</span>
+			  <span class="avatar-option" data-avatar="🦅">🦅</span>
+			  <!-- Objetos / bebidas -->
+			  <span class="avatar-option" data-avatar="🔥">🔥</span>
+			  <span class="avatar-option" data-avatar="⭐">⭐</span>
+			  <span class="avatar-option" data-avatar="💎">💎</span>
+			  <span class="avatar-option" data-avatar="🍺">🍺</span>
+			  <span class="avatar-option" data-avatar="🍻">🍻</span>
+			  <span class="avatar-option" data-avatar="🥃">🥃</span>
+			  <span class="avatar-option" data-avatar="🍷">🍷</span>
+			  <span class="avatar-option" data-avatar="🍸">🍸</span>
+			  <span class="avatar-option" data-avatar="🎲">🎲</span>
+			  <span class="avatar-option" data-avatar="🎯">🎯</span>
+			  <span class="avatar-option" data-avatar="🏆">🏆</span>
+			  <span class="avatar-option" data-avatar="⚡">⚡</span>
+			</div>       
+		 </div>
+        <button class="btn btn-primary btn-large" id="btnCreateRoom">🎮 Crear Sala</button>
+        <div class="divider"><span>o únete</span></div>
+        <div class="join-section">
+          <input type="text" id="roomCodeInput" placeholder="Código" maxlength="5" autocomplete="off" style="text-transform:uppercase">
+          <button class="btn btn-secondary" id="btnJoinRoom">Unirme</button>
+        </div>
+      </div>
+      <div class="ad-banner glass-card">
+        <p>⚠️ Bebe con responsabilidad · +18</p>
+        <div class="ad-slot">
+          <p class="ad-text">📢 Espacio publicitario</p>
+          <p class="ad-subtext">Bebidas · Apuestas · Entretenimiento</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOBBY -->
+  <div id="screen-lobby" class="screen">
+    <div class="lobby-container">
+      <div class="lobby-top-bar">
+        <button class="btn-icon" id="btnLeaveLobby" title="Salir">🚪</button>
+        <div class="lobby-title-area">
+          <h2>Sala de Espera</h2>
+          <div class="room-code-row">
+            <span>Código:</span>
+            <span class="code-display" id="lobbyRoomCode">XXXXX</span>
+            <button class="btn-mini" id="btnCopyCode">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR + Link Invite -->
+      <div class="invite-section glass-card" id="inviteSection">
+        <div class="qr-box">
+          <img id="qrImage" src="" alt="QR" class="qr-img">
+          <p class="qr-hint">Escanea para unirte</p>
+        </div>
+        <div class="invite-link-box">
+          <label>Link de invitación:</label>
+          <div class="link-copy-row">
+            <input type="text" id="inviteLinkInput" readonly class="link-input">
+            <button class="btn btn-secondary btn-sm" id="btnCopyLink">📋 Copiar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="players-grid" id="lobbyPlayers"></div>
+
+      <!-- Custom Content -->
+      <details class="glass-card accordion">
+        <summary class="accordion-header">➕ Contenido Personalizado</summary>
+        <div class="accordion-body">
+          <div class="input-group">
+            <label>Modalidad</label>
+            <select id="customMode">
+              <option value="trivia">🧠 Trivia</option>
+              <option value="challenge">🎯 Reto</option>
+              <option value="neverever">🙅 Yo Nunca Nunca</option>
+              <option value="truth">🔮 Verdad</option>
+              <option value="dare">⚡ Reto (Verdad o Reto)</option>
+            </select>
+          </div>
+          <div id="customTriviaFields">
+            <div class="input-group"><label>Pregunta</label><input type="text" id="customTriviaQ" placeholder="Pregunta"></div>
+            <div class="input-group"><label>Opción A</label><input type="text" id="customTriviaA"></div>
+            <div class="input-group"><label>Opción B</label><input type="text" id="customTriviaB"></div>
+            <div class="input-group"><label>Opción C</label><input type="text" id="customTriviaC"></div>
+            <div class="input-group"><label>Opción D</label><input type="text" id="customTriviaD"></div>
+            <div class="input-group"><label>Correcta</label>
+              <select id="customTriviaCorrect"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
+            </div>
+          </div>
+          <div id="customTextFields" style="display:none">
+            <div class="input-group"><label>Texto</label><input type="text" id="customText" placeholder="Escribe aquí"></div>
+          </div>
+          <div class="custom-added-list" id="customAddedList"></div>
+          <button class="btn btn-primary" id="btnAddCustom">➕ Agregar</button>
+        </div>
+      </details>
+
+      <!-- Settings (host) -->
+      <details class="glass-card accordion" id="settingsSection" style="display:none">
+        <summary class="accordion-header">⚙️ Configuración</summary>
+        <div class="accordion-body settings-body">
+
+          <div class="setting-item">
+            <label>🌐 Idioma</label>
+            <select id="settingLang"><option value="es">🇪🇸 Español</option><option value="en">🇺🇸 English</option></select>
+          </div>
+
+          <div class="setting-item">
+            <label>⏱️ Tiempo por pregunta (seg)</label>
+            <div class="quick-pick" data-target="settingTime" data-values="10,15,20,30">
+              <button class="qp-btn" data-val="10">10</button>
+              <button class="qp-btn active" data-val="20">20</button>
+              <button class="qp-btn" data-val="30">30</button>
+              <button class="qp-btn" data-val="45">45</button>
+              <button class="qp-btn qp-custom" data-val="custom">✏️</button>
+            </div>
+            <input type="number" id="settingTime" value="20" min="5" max="120" class="setting-input hidden-input">
+          </div>
+
+          <div class="setting-item">
+            <label>🔄 Número de rondas</label>
+            <div class="quick-pick" data-target="settingRounds">
+              <button class="qp-btn" data-val="10">10</button>
+              <button class="qp-btn active" data-val="20">20</button>
+              <button class="qp-btn" data-val="30">30</button>
+              <button class="qp-btn" data-val="50">50</button>
+              <button class="qp-btn qp-custom" data-val="custom">✏️</button>
+            </div>
+            <input type="number" id="settingRounds" value="20" min="3" max="200" class="setting-input hidden-input">
+          </div>
+
+          <div class="setting-item">
+            <label>📊 Llenado barra por error (%)</label>
+            <div class="quick-pick" data-target="settingBarFill">
+              <button class="qp-btn" data-val="5">5%<br><small>Suave</small></button>
+              <button class="qp-btn active" data-val="8">8%<br><small>Normal</small></button>
+              <button class="qp-btn" data-val="12">12%<br><small>Intenso</small></button>
+              <button class="qp-btn" data-val="20">20%<br><small>Locura</small></button>
+              <button class="qp-btn qp-custom" data-val="custom">✏️</button>
+            </div>
+            <input type="number" id="settingBarFill" value="8" min="1" max="50" class="setting-input hidden-input">
+          </div>
+
+          <div class="setting-item">
+            <label>🗳️ Tiempo votación retos (seg)</label>
+            <div class="quick-pick" data-target="settingVoteTime">
+              <button class="qp-btn" data-val="10">10</button>
+              <button class="qp-btn active" data-val="15">15</button>
+              <button class="qp-btn" data-val="20">20</button>
+              <button class="qp-btn" data-val="30">30</button>
+              <button class="qp-btn qp-custom" data-val="custom">✏️</button>
+            </div>
+            <input type="number" id="settingVoteTime" value="15" min="5" max="60" class="setting-input hidden-input">
+          </div>
+
+          <div class="setting-item">
+            <label>🙅 Auto-avance Yo Nunca</label>
+            <div class="toggle-row">
+              <input type="checkbox" id="settingAutoAdvance" checked>
+              <label for="settingAutoAdvance">Activado</label>
+            </div>
+            <div class="quick-pick" data-target="settingAutoTime">
+              <button class="qp-btn" data-val="7">7s</button>
+              <button class="qp-btn active" data-val="10">10s</button>
+              <button class="qp-btn" data-val="15">15s</button>
+              <button class="qp-btn" data-val="20">20s</button>
+              <button class="qp-btn qp-custom" data-val="custom">✏️</button>
+            </div>
+            <input type="number" id="settingAutoTime" value="10" min="5" max="60" class="setting-input hidden-input">
+          </div>
+
+          <div class="setting-item">
+            <label>🚫 Cancelar partida</label>
+            <select id="settingCancelMethod"><option value="host">Solo anfitrión</option><option value="vote">Por votación</option></select>
+          </div>
+
+          <div class="setting-item">
+            <label>🎮 Tipos de juego</label>
+            <div class="game-types-check">
+              <label><input type="checkbox" value="trivia" checked class="gameTypeCheck"> 🧠 Trivia</label>
+              <label><input type="checkbox" value="challenge" checked class="gameTypeCheck"> 🎯 Retos</label>
+              <label><input type="checkbox" value="neverever" checked class="gameTypeCheck"> 🙅 Yo Nunca</label>
+              <label><input type="checkbox" value="truthordare" checked class="gameTypeCheck"> 🎭 Verdad/Reto</label>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <div class="lobby-actions">
+        <div class="ready-status" id="readyStatus"></div>
+        <button class="btn btn-success btn-large" id="btnReady">✋ Estoy Listo</button>
+        <button class="btn btn-primary btn-large" id="btnStartGame" style="display:none">🚀 ¡Comenzar!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="screen-game" class="screen">
+    <div class="game-container">
+      <div class="game-header">
+        <div class="gh-left">
+          <span class="round-badge" id="roundInfo">1/20</span>
+        </div>
+        <div class="gh-center">
+          <div class="cbar-wrap">
+            <div class="cbar-label">🍺 Barra Colectiva</div>
+            <div class="cbar"><div class="cbar-fill" id="collectiveBarFill"></div><span class="cbar-text" id="collectiveBarText">0%</span></div>
+          </div>
+        </div>
+        <div class="gh-right">
+          <button class="btn-icon-sm tab-btn active" data-tab="game">🎮</button>
+          <button class="btn-icon-sm tab-btn" data-tab="ranking">🏆</button>
+          <button class="btn-icon-sm tab-btn" data-tab="expenses">💰</button>
+          <button class="btn-icon-sm tab-btn" data-tab="chat">💬<span class="chat-badge" id="chatBadge" style="display:none"></span></button>
+        </div>
+      </div>
+
+      <!-- Timed effects banner -->
+      <div class="timed-effects-bar" id="timedEffectsBar" style="display:none"></div>
+
+      <!-- Ad -->
+      <div class="game-ad">📢 Espacio publicitario</div>
+
+      <!-- Audio placeholder for collective bar music -->
+      <audio id="collectiveAudio" preload="none">
+        <!-- <source src="collective-music.mp3" type="audio/mpeg"> -->
+      </audio>
+
+      <!-- Game Tab -->
+      <div class="game-tab active" id="tab-game">
+        <div class="game-content" id="gameContent">
+          <div class="game-waiting"><div class="spinner"></div><p>Preparando...</p></div>
+        </div>
+        <div class="game-footer" id="gameFooter">
+          <button class="btn btn-secondary btn-sm" id="btnSkipVote" style="display:none">⏭️ Avanzar</button>
+          <span class="skip-count" id="skipCount" style="display:none"></span>
+          <button class="btn btn-danger btn-sm" id="btnCancelGame">🚫 Cancelar</button>
+        </div>
+      </div>
+
+      <!-- Ranking Tab -->
+      <div class="game-tab" id="tab-ranking">
+        <div class="tab-inner"><h2 class="tab-title">🏆 Ranking</h2><div class="ranking-list" id="rankingList"></div></div>
+      </div>
+
+      <!-- Expenses Tab -->
+      <div class="game-tab" id="tab-expenses">
+        <div class="tab-inner">
+          <h2 class="tab-title">💰 Cuenta</h2>
+          <div class="add-expense-form glass-card">
+            <input type="text" id="expenseDesc" placeholder="Descripción">
+            <div class="expense-row"><input type="number" id="expenseAmount" placeholder="$0.00" min="0" step="0.01"><select id="expensePaidBy"></select></div>
+            <button class="btn btn-primary" id="btnAddExpense">➕ Agregar Gasto</button>
+          </div>
+          <div class="expenses-summary">
+            <div class="summary-card glass-card"><span>Total</span><span class="summary-value" id="totalExpenses">$0.00</span></div>
+            <div class="summary-card glass-card"><span>Por persona</span><span class="summary-value" id="perPersonExpenses">$0.00</span></div>
+          </div>
+          <div class="expenses-list" id="expensesList"></div>
+          <div class="balances-list" id="balancesList"></div>
+        </div>
+      </div>
+
+      <!-- Chat Tab -->
+      <div class="game-tab" id="tab-chat">
+        <div class="chat-container">
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-input-row"><input type="text" id="chatInput" placeholder="Mensaje..." maxlength="200"><button class="btn btn-primary btn-sm" id="btnSendChat">📤</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME OVER -->
+  <div id="screen-gameover" class="screen">
+    <div class="gameover-container">
+      <div class="confetti" id="confetti"></div>
+      <h1 class="gameover-title">🎉 ¡Fin del Juego!</h1>
+      <div class="podium" id="podium"></div>
+      <div class="final-ranking" id="finalRanking"></div>
+      <div class="gameover-actions">
+        <button class="btn btn-primary btn-large" id="btnPlayAgain">🔄 Jugar de Nuevo</button>
+        <button class="btn btn-secondary" id="btnViewExpenses">💰 Ver Cuenta</button>
+        <button class="btn btn-secondary" id="btnGoHome">🏠 Inicio</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLLECTIVE MODAL -->
+  <div class="modal-overlay" id="collectiveModal">
+    <div class="modal-content collective-modal">
+      <div class="beer-rain">🍺🍻🍺🍻🍺🍻</div>
+      <h1>🚨 ¡BARRA LLENA!</h1>
+      <h2>¡TODOS BEBEN!</h2>
+      <p class="modal-sub">La barra colectiva se llenó... ¡Salud! 🥂</p>
+      <!-- Audio will play here when source is added -->
+      <div class="collective-accept-status" id="collectiveAcceptStatus">0/0 listos</div>
+      <button class="btn btn-primary btn-large" id="btnCollectiveAccept">🍻 ¡Listo, seguimos!</button>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/drinkparty/socket.io/socket.io.js"></script>
+  <script src="/drinkparty/app.js"></script>
+</body>
+</html>

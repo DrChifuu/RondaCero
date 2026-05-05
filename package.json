@@ -1,0 +1,30 @@
+{
+  "name": "ronda-cero-typescript",
+  "version": "1.0.0",
+  "description": "Plataforma de minijuegos sociales - TypeScript version",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc && cp -r public dist/ && cp -r views dist/ && cp -r src/minijuegos/DrinkParty/public dist/minijuegos/DrinkParty/",
+    "start": "node dist/server.js",
+    "dev": "npm run build && node dist/server.js",
+    "postinstall": "cd src/minijuegos/DrinkParty && npm install"
+  },
+  "dependencies": {
+    "@vercel/node": "^5.7.15",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "http-proxy-middleware": "^3.0.5",
+    "qrcode": "^1.5.3",
+    "socket.io": "^4.7.2",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/express-session": "^1.17.10",
+    "@types/node": "^20.11.0",
+    "@types/qrcode": "^1.5.5",
+    "@types/uuid": "^9.0.7",
+    "typescript": "^5.3.3"
+  }
+}

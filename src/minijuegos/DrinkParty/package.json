@@ -1,0 +1,16 @@
+{
+  "name": "drink-party",
+  "version": "2.1.0",
+  "description": "Juego de bebidas multijugador en tiempo real - TypeScript",
+  "main": "../../dist/minijuegos/DrinkParty/server.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.0",
+    "@types/qrcode": "^1.5.5",
+    "@types/uuid": "^9.0.7",
+    "typescript": "^5.3.3"
+  }
+}

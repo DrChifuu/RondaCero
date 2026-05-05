@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RondaCero - Minijuegos</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;1,400;1,500&family=Lexend:wght@600&family=Spline+Sans:wght@700;800&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bright": "#303b41",
+            "surface-dim": "#0a151a",
+            "secondary-fixed-dim": "#5bd5fc",
+            "background": "#0a151a",
+            "inverse-surface": "#d8e4ec",
+            "on-surface": "#d8e4ec",
+            "inverse-primary": "#745c00",
+            "surface": "#0a151a",
+            "surface-container-low": "#121d23",
+            "on-primary-container": "#725a00",
+            "on-tertiary-container": "#b8005e",
+            "secondary-container": "#00a3c8",
+            "primary-container": "#ffd23f",
+            "on-error": "#690005",
+            "surface-container-highest": "#2b363d",
+            "primary-fixed": "#ffe089",
+            "surface-variant": "#2b363d",
+            "on-secondary-container": "#003341",
+            "tertiary-fixed-dim": "#ffb1c6",
+            "on-error-container": "#ffdad6",
+            "on-surface-variant": "#d1c5ad",
+            "error-container": "#93000a",
+            "secondary-fixed": "#b7eaff",
+            "outline-variant": "#4d4634",
+            "error": "#ffb4ab",
+            "surface-container-lowest": "#051015",
+            "inverse-on-surface": "#273238",
+            "on-tertiary-fixed": "#3f001c",
+            "tertiary-container": "#ffc9d6",
+            "on-secondary-fixed": "#001f28",
+            "on-tertiary": "#650031",
+            "on-primary-fixed": "#241a00",
+            "primary-fixed-dim": "#edc22e",
+            "tertiary": "#fff0f2",
+            "surface-tint": "#edc22e",
+            "surface-container-high": "#202b32",
+            "on-secondary-fixed-variant": "#004e61",
+            "secondary": "#5bd5fc",
+            "on-primary-fixed-variant": "#574500",
+            "on-secondary": "#003543",
+            "on-primary": "#3d2f00",
+            "primary": "#fff2d7",
+            "outline": "#9a907a",
+            "on-background": "#d8e4ec",
+            "surface-container": "#162127",
+            "tertiary-fixed": "#ffd9e1",
+            "on-tertiary-fixed-variant": "#8e0048"
+          },
+          fontFamily: {
+            "body-sm": ["Be Vietnam Pro"],
+            "body-lg": ["Be Vietnam Pro"],
+            "headline-xl": ["Spline Sans"],
+            "label-bold": ["Lexend"],
+            "bilingual-sub": ["Be Vietnam Pro"],
+            "headline-md": ["Spline Sans"]
+          },
+          fontSize: {
+            "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+            "headline-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "label-bold": ["14px", { "lineHeight": "1.0", "fontWeight": "600" }],
+            "bilingual-sub": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+            "headline-md": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "margin": "24px",
+            "chunky-gap": "12px",
+            "gutter": "16px",
+            "container-max": "1200px",
+            "unit": "8px"
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    .rough-border {
+      border: 4px solid #000;
+      border-radius: 4px 8px 3px 6px;
+    }
+    .rough-shadow {
+      box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+    }
+    .rough-shadow-lg {
+      box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+    }
+    .rough-button:active {
+      box-shadow: none;
+      transform: translate(4px, 4px);
+    }
+    .paper-stack {
+      position: relative;
+    }
+    .paper-stack::before {
+      content: '';
+      position: absolute;
+      top: 4px; left: -4px; right: 4px; bottom: -4px;
+      border: 4px solid #000;
+      background: #2b363d;
+      z-index: -1;
+      transform: rotate(-1deg);
+    }
+    .game-card:hover {
+      transform: translateY(-4px) rotate(0deg);
+      box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-lg selection:bg-primary-container selection:text-black">
+  <div class="mx-auto max-w-container-max px-gutter py-margin">
+    <!-- Navbar superior -->
+    <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+      <h1 class="font-headline-xl text-headline-xl text-primary-fixed italic transform -rotate-2">
+        RondaCero
+      </h1>
+      <div class="flex items-center gap-4">
+        <span class="bg-surface-container-highest rough-border rough-shadow px-4 py-2 font-label-bold text-label-bold text-on-surface transform rotate-1">
+          <%= user.name %>
+        </span>
+        <a href="/logout" class="bg-surface-dim rough-border rough-shadow px-4 py-2 font-label-bold text-label-bold text-on-surface flex items-center gap-2 transform -rotate-1 hover:bg-primary-container hover:text-black transition-colors">
+          <span class="material-symbols-outlined">logout</span> Salir
+        </a>
+      </div>
+    </div>
+
+    <!-- Grid de minijuegos -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-chunky-gap">
+      <!-- DrinkParty -->
+      <a href="/drinkparty" class="game-card bg-surface-bright rough-border rough-shadow p-6 flex flex-col items-center text-center transform rotate-2 transition-transform">
+        <span class="text-6xl mb-2">🍻</span>
+        <h2 class="font-headline-md text-headline-md text-primary-fixed">DrinkParty</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">Trivia, retos y mucho más</p>
+        <span class="font-bilingual-sub text-bilingual-sub text-on-surface-variant italic mt-1">Juego de beber</span>
+      </a>
+      <!-- Futuros minijuegos (deshabilitados) -->
+      <div class="bg-surface-container-low rough-border rough-shadow p-6 flex flex-col items-center text-center transform -rotate-1 opacity-60 cursor-not-allowed">
+        <span class="text-6xl mb-2">🎤</span>
+        <h2 class="font-headline-md text-headline-md text-on-surface">Karaoke</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">Próximamente</p>
+        <span class="font-bilingual-sub text-bilingual-sub text-on-surface-variant italic mt-1">Canta con amigos</span>
+      </div>
+      <div class="bg-surface-container-low rough-border rough-shadow p-6 flex flex-col items-center text-center transform rotate-1 opacity-60 cursor-not-allowed">
+        <span class="text-6xl mb-2">🎲</span>
+        <h2 class="font-headline-md text-headline-md text-on-surface">Dados</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">Próximamente</p>
+        <span class="font-bilingual-sub text-bilingual-sub text-on-surface-variant italic mt-1">Minijuego de azar</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
